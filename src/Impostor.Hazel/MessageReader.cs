@@ -126,7 +126,10 @@ namespace Impostor.Hazel
         public string ReadString()
         {
             var len = ReadPackedInt32();
-            var output = Encoding.UTF8.GetString(Buffer.AsSpan(ReadPosition, len));
+            var output = "default";
+            try {
+                output = Encoding.UTF8.GetString(Buffer.AsSpan(ReadPosition, len));
+            } catch(ArgumentOutOfRangeException) {}
             Position += len;
             return output;
         }

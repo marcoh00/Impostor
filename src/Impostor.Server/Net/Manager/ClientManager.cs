@@ -55,7 +55,7 @@ namespace Impostor.Server.Net.Manager
 
         public async ValueTask RegisterConnectionAsync(IHazelConnection connection, string name, int clientVersion)
         {
-            if (!SupportedVersions.Contains(clientVersion))
+            if (!SupportedVersions.Contains(clientVersion) && false)
             {
                 using var packet = MessageWriter.Get(MessageType.Reliable);
                 Message01JoinGameS2C.SerializeError(packet, false, DisconnectReason.IncorrectVersion);

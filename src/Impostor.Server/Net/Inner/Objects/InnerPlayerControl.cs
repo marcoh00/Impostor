@@ -56,12 +56,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.PlayAnimation)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.PlayAnimation)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.PlayAnimation)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.PlayAnimation)} to a specific player instead of broadcast");
                     }
 
                     var animation = reader.ReadByte();
@@ -73,12 +73,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CompleteTask)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CompleteTask)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CompleteTask)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CompleteTask)} to a specific player instead of broadcast");
                     }
 
                     var taskId = reader.ReadPackedUInt32();
@@ -101,7 +101,7 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsHost)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SyncSettings)} but was not a host");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SyncSettings)} but was not a host");
                     }
 
                     _game.Options.Deserialize(reader.ReadBytesAndSize());
@@ -113,7 +113,7 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsHost)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetInfected)} but was not a host");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetInfected)} but was not a host");
                     }
 
                     var length = reader.ReadPackedInt32();
@@ -141,12 +141,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsHost)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.Exiled)} but was not a host");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.Exiled)} but was not a host");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.Exiled)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.Exiled)} to a specific player instead of broadcast");
                     }
 
                     // TODO: Not hit?
@@ -161,29 +161,29 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckName)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckName)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target == null || !target.IsHost)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckName)} to the wrong player");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckName)} to the wrong player");
                     }
 
                     var name = reader.ReadString();
 
                     if (name.Length > 10)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckName)} with name exceeding 10 characters");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckName)} with name exceeding 10 characters");
                     }
 
                     if (string.IsNullOrWhiteSpace(name) || !name.All(TextBox.IsCharAllowed))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckName)} with name containing illegal characters");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckName)} with name containing illegal characters");
                     }
 
                     if (sender.Client.Name != name)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} with name not matching his name from handshake");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} with name not matching his name from handshake");
                     }
 
                     PlayerInfo.RequestedPlayerName = name;
@@ -195,12 +195,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsHost)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} but was not a host");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} but was not a host");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} to a specific player instead of broadcast");
                     }
 
                     var name = reader.ReadString();
@@ -209,19 +209,19 @@ namespace Impostor.Server.Net.Inner.Objects
                     {
                         if (_game.Players.Any(x => x.Character != null && x.Character != this && x.Character.PlayerInfo.PlayerName == name))
                         {
-                            throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} with a name that is already used");
+                            // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} with a name that is already used");
                         }
 
                         if (sender.Client.Name != name)
                         {
-                            throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} with name not matching his name from handshake");
+                            // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} with name not matching his name from handshake");
                         }
                     }
                     else
                     {
                         if (PlayerInfo.RequestedPlayerName == null)
                         {
-                            throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} for a player that didn't request it");
+                            // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} for a player that didn't request it");
                         }
 
                         var expected = PlayerInfo.RequestedPlayerName!;
@@ -245,7 +245,7 @@ namespace Impostor.Server.Net.Inner.Objects
 
                         if (name != expected)
                         {
-                            throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} with incorrect name");
+                            // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetName)} with incorrect name");
                         }
                     }
 
@@ -259,19 +259,19 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckColor)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckColor)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target == null || !target.IsHost)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckColor)} to the wrong player");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckColor)} to the wrong player");
                     }
 
                     var color = reader.ReadByte();
 
                     if (color > Enum.GetValues<ColorType>().Length)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckColor)} with invalid color");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.CheckColor)} with invalid color");
                     }
 
                     PlayerInfo.RequestedColorId = color;
@@ -283,12 +283,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsHost)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} but was not a host");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} but was not a host");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} to a specific player instead of broadcast");
                     }
 
                     var color = reader.ReadByte();
@@ -297,14 +297,14 @@ namespace Impostor.Server.Net.Inner.Objects
                     {
                         if (_game.Players.Any(x => x.Character != null && x.Character != this && x.Character.PlayerInfo.ColorId == color))
                         {
-                            throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} with a color that is already used");
+                            // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} with a color that is already used");
                         }
                     }
                     else
                     {
                         if (PlayerInfo.RequestedColorId == null)
                         {
-                            throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} for a player that didn't request it");
+                            // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} for a player that didn't request it");
                         }
 
                         var expected = PlayerInfo.RequestedColorId!.Value;
@@ -316,7 +316,7 @@ namespace Impostor.Server.Net.Inner.Objects
 
                         if (color != expected)
                         {
-                            throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} with incorrect color");
+                            // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetColor)} with incorrect color");
                         }
                     }
 
@@ -330,12 +330,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetHat)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetHat)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetHat)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetHat)} to a specific player instead of broadcast");
                     }
 
                     PlayerInfo.HatId = reader.ReadPackedUInt32();
@@ -346,12 +346,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetSkin)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetSkin)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetHat)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetHat)} to a specific player instead of broadcast");
                     }
 
                     PlayerInfo.SkinId = reader.ReadPackedUInt32();
@@ -364,12 +364,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.ReportDeadBody)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.ReportDeadBody)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.ReportDeadBody)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.ReportDeadBody)} to a specific player instead of broadcast");
                     }
 
 
@@ -384,22 +384,22 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.MurderPlayer)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.MurderPlayer)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.MurderPlayer)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.MurderPlayer)} to a specific player instead of broadcast");
                     }
 
                     if (!sender.Character.PlayerInfo.IsImpostor)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.MurderPlayer)} as crewmate");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.MurderPlayer)} as crewmate");
                     }
 
                     if (!sender.Character.PlayerInfo.CanMurder(_game))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.MurderPlayer)} too fast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.MurderPlayer)} too fast");
                     }
 
                     sender.Character.PlayerInfo.LastMurder = DateTimeOffset.UtcNow;
@@ -418,12 +418,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SendChat)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SendChat)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SendChat)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SendChat)} to a specific player instead of broadcast");
                     }
 
                     var chat = reader.ReadString();
@@ -436,12 +436,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsHost)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.StartMeeting)} but was not a host");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.StartMeeting)} but was not a host");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.StartMeeting)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.StartMeeting)} to a specific player instead of broadcast");
                     }
 
                     // deadBodyPlayerId == byte.MaxValue -- means emergency call by button
@@ -458,12 +458,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetScanner)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetScanner)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetScanner)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetScanner)} to a specific player instead of broadcast");
                     }
 
                     var on = reader.ReadBoolean();
@@ -475,12 +475,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SendChatNote)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SendChatNote)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SendChatNote)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SendChatNote)} to a specific player instead of broadcast");
                     }
 
                     var playerId = reader.ReadByte();
@@ -492,12 +492,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetPet)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetPet)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetPet)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetPet)} to a specific player instead of broadcast");
                     }
 
                     PlayerInfo.PetId = reader.ReadPackedUInt32();
@@ -509,12 +509,12 @@ namespace Impostor.Server.Net.Inner.Objects
                 {
                     if (!sender.IsOwner(this))
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetStartCounter)} to an unowned {nameof(InnerPlayerControl)}");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetStartCounter)} to an unowned {nameof(InnerPlayerControl)}");
                     }
 
                     if (target != null)
                     {
-                        throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetStartCounter)} to a specific player instead of broadcast");
+                        // // throw new ImpostorCheatException($"Client sent {nameof(RpcCalls.SetStartCounter)} to a specific player instead of broadcast");
                     }
 
                     // Used to compare with LastStartCounter.
@@ -547,7 +547,7 @@ namespace Impostor.Server.Net.Inner.Objects
         {
             if (!sender.IsHost)
             {
-                throw new ImpostorCheatException($"Client attempted to send data for {nameof(InnerPlayerControl)} as non-host");
+                // // throw new ImpostorCheatException($"Client attempted to send data for {nameof(InnerPlayerControl)} as non-host");
             }
 
             if (initialState)

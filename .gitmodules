@@ -1,0 +1,3 @@
+[submodule "AllOfUsBot"]
+	path = AllOfUsBot
+	url = https://github.com/XtraCube/AllOfUsBot.git

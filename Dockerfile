@@ -18,17 +18,20 @@ RUN NETCORE_PLATFORM='linux-x64'; \
 
 # Copy everything else.
 COPY src/. ./src/
+COPY AllOfUsBot/. ./AllOfUsBot/
 RUN case "$TARGETARCH" in \
     amd64)  NETCORE_PLATFORM='linux-x64';; \
     arm64)  NETCORE_PLATFORM='linux-arm64';; \
     arm)    NETCORE_PLATFORM='linux-arm';; \
     *) echo "unsupported architecture"; exit 1 ;; \
   esac && \
-  dotnet publish -c release -o /app -r "$NETCORE_PLATFORM" --no-restore ./src/Impostor.Server/Impostor.Server.csproj
+  dotnet publish -c release -o /app -r "$NETCORE_PLATFORM" --no-restore ./src/Impostor.Server/Impostor.Server.csproj && \
+  dotnet publish -c release -o /app -r "$NETCORE_PLATFORM" ./AllOfUsBot/AllOfUs/AllOfUsBot.csproj
 
 # Final image.
 FROM mcr.microsoft.com/dotnet/runtime:5.0
 WORKDIR /app
 COPY --from=build /app ./
+RUN mkdir plugins && cp -v AllOfUsBot.dll plugins
 EXPOSE 22023/udp
 ENTRYPOINT ["./Impostor.Server"]
